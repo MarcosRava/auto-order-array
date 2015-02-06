@@ -1,0 +1,23 @@
+{
+  "name": "auto-order-array",
+  "version": "0.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "mocha"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/MarcosRava/auto-order-array.git"
+  },
+  "author": "marcosrava@gmail.com",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/MarcosRava/auto-order-array/issues"
+  },
+  "homepage": "https://github.com/MarcosRava/auto-order-array",
+  "dependencies": {
+    "extends": "0.0.4",
+    "extend": "^2.0.0"
+  }
+}
