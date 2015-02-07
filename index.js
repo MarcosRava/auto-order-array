@@ -15,6 +15,11 @@ module.exports = (function (){
   AutoOrderArray.prototype.push = push;
   AutoOrderArray.prototype.pop = pop;
   AutoOrderArray.prototype.sort = sort;
+  AutoOrderArray.prototype.concat = concat;
+  AutoOrderArray.prototype.indexOf = indexOf;
+  AutoOrderArray.prototype.lastIndexOf = lastIndexOf;
+  AutoOrderArray.prototype.join = join;
+  AutoOrderArray.prototype.reverse = reverse;
   return AutoOrderArray;
   
 })();
@@ -22,7 +27,7 @@ module.exports = (function (){
 function push() {
   var args = Array.prototype.slice.call(arguments);
   this.emit('beforePush', args, this);
-  var ret = Array.prototype.push.apply(this, arguments);
+  var ret = Array.prototype.push.apply(this, args);
   this.emit('push', args, this);  
   return ret;
 }
@@ -43,7 +48,54 @@ function sort() {
   return ret;
 }
 
+function concat() {
+  var args = Array.prototype.slice.call(arguments);
+  this.emit('beforeConcat', args, this);
+  var ret = new this.constructor();
+  Array.prototype.forEach.call(this, function(obj) {
+     Array.prototype.push.call(ret, obj);
+  });
+  Array.prototype.forEach.call(args, function(array) {
+    Array.prototype.forEach.call(array, function(obj) {
+     Array.prototype.push.call(ret, obj);
+    });
+  });
+  this.emit('concat', ret, this);  
+  return ret;
+}
+
+function indexOf() {
+  var args = Array.prototype.slice.call(arguments);
+  this.emit('beforeIndexOf', args, this);
+  var ret = Array.prototype.indexOf.apply(this, arguments);
+  this.emit('indexOf', ret, this);  
+  return ret;
+}
+
+function lastIndexOf() {
+  var args = Array.prototype.slice.call(arguments);
+  this.emit('beforeLastindexOf', args, this);
+  var ret = Array.prototype.lastIndexOf.apply(this, arguments);
+  this.emit('lastIndexOf', ret, this);  
+  return ret;
+}
+
+function join() {
+  var args = Array.prototype.slice.call(arguments);
+  this.emit('beforeJoin', args, this);
+  var ret = Array.prototype.join.apply(this, arguments);
+  this.emit('join', ret, this);  
+  return ret;
+}
+
+function reverse() {
+  var args = Array.prototype.slice.call(arguments);
+  this.emit('beforeReverse', args, this);
+  var ret = Array.prototype.reverse.apply(this, arguments);
+  this.emit('reverse', ret, this);  
+  return ret;
+}
+
 function autoSort() {
-  console.log('sorting')
   this.sort(this._args.compare);  
 }
