@@ -51,13 +51,13 @@ function sort() {
 function concat() {
   var args = Array.prototype.slice.call(arguments);
   this.emit('beforeConcat', args, this);
-  var ret = new this.constructor();
+  var ret = new this.constructor(this._args);
   Array.prototype.forEach.call(this, function(obj) {
-     Array.prototype.push.call(ret, obj);
+     ret.push(obj);
   });
   Array.prototype.forEach.call(args, function(array) {
     Array.prototype.forEach.call(array, function(obj) {
-     Array.prototype.push.call(ret, obj);
+     ret.push(obj);
     });
   });
   this.emit('concat', ret, this);  
